@@ -6,6 +6,8 @@
     <string>local.tallyshot.TallyShot</string>
     <key>CFBundleName</key>
     <string>TallyShot</string>
+    <key>CFBundleIconFile</key>
+    <string>AppIcon</string>
     <key>CFBundleExecutable</key>
     <string>TallyShot</string>
     <key>CFBundlePackageType</key>

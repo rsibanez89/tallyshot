@@ -22,3 +22,5 @@ Read `README.md` first.
 - No network calls.
 - Build with Command Line Tools: no Swift macros (`@State`, `@Observable`, XCTest). `ObservableObject` works. Swift Testing works via `scripts/test.sh`.
 - Verify OCR changes with `--analyze` on a rendered image, not only unit tests.
+- The icon is drawn in code: edit `scripts/render-icon.swift`, then run `scripts/make-icon.sh`. Never edit `Resources/AppIcon/` by hand.
+- Do not run `build-app.sh` or `install.sh`: they sign with Rodrigo's keychain key and trigger a password prompt. Verify with `swift build`, `scripts/test.sh`, `--analyze`.

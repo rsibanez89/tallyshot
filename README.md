@@ -1,5 +1,7 @@
 # TallyShot
 
+<img src="Resources/AppIcon/AppIcon-1024.png" width="128" alt="TallyShot icon: selection brackets around tally marks">
+
 Sum & copy tables from screen.
 Press a hotkey, drag over numbers or a table, get the total or a spreadsheet-ready copy.
 macOS menu bar app, prototype.
@@ -57,6 +59,7 @@ Logic lives in `Sources/TallyShotCore`, covered by tests.
 swift run TallyShot --analyze x.png                 # prints sum, table (Markdown) and text
 swift run TallyShot --analyze x.png --copy table    # also writes the clipboard like the panel
 log stream --predicate 'subsystem == "local.tallyshot"'
+./scripts/make-icon.sh            # regenerates Resources/AppIcon from scripts/render-icon.swift
 ```
 
 ## Install and permissions

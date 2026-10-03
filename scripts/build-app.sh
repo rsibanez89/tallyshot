@@ -8,9 +8,10 @@ swift build -c release
 BIN="$(swift build -c release --show-bin-path)/TallyShot"
 APP=dist/TallyShot.app
 rm -rf "$APP"
-mkdir -p "$APP/Contents/MacOS"
+mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
 cp "$BIN" "$APP/Contents/MacOS/TallyShot"
 cp Resources/Info.plist "$APP/Contents/Info.plist"
+cp Resources/AppIcon/AppIcon.icns "$APP/Contents/Resources/AppIcon.icns"
 
 if has_signing_identity; then
   codesign --force --sign "$SIGNING_IDENTITY_NAME" "$APP"
