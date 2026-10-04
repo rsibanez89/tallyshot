@@ -14,6 +14,8 @@ Read `README.md` first.
   - `ResultModel.swift`, `ResultView.swift`, `ResultPresenter.swift`: tabbed result panel, highlight, on-screen column totals.
   - `Clipboard.swift`: all pasteboard writes.
   - `AnalyzeCommand.swift`: `--analyze <image> [--copy ...]` debug CLI.
+- `scripts/`: `build-app.sh`, `make-dmg.sh`, `install.sh` (local), `ci-import-certificate.sh` (release), `setup-signing.sh` / `setup-release-signing.sh` (one-time).
+- `.github/workflows/release.yml`: tag `v*` publishes `TallyShot.dmg` to GitHub Releases. `docs/`: landing page (GitHub Pages).
 
 ## Hard rules
 

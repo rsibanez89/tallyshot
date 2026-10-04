@@ -71,6 +71,21 @@ log stream --predicate 'subsystem == "local.tallyshot"'
 - Feature requests and bugs go to GitHub issue forms in `.github/ISSUE_TEMPLATE/`.
 - Preview locally: `open docs/index.html`.
 
+## Releases
+
+```bash
+git tag v0.2.0 && git push origin v0.2.0
+```
+
+- `.github/workflows/release.yml` runs on the tag, on a `macos-26` GitHub runner:
+  tests, import the release certificate, `build-app.sh` (version from the tag), `make-dmg.sh`, GitHub Release.
+- The release asset is always `TallyShot.dmg`, so the website link to `releases/latest/download/TallyShot.dmg` never changes.
+- Signing: "TallyShot Release Signing", a self-signed certificate kept in the repo secrets
+  `TALLYSHOT_RELEASE_CERT_P12` and `TALLYSHOT_RELEASE_CERT_PASSWORD` (created by `scripts/setup-release-signing.sh`).
+  The same certificate on every release keeps users' Screen Recording grant across updates. Rotating it resets that grant for everyone.
+- Not notarized yet: users confirm the first launch with "Open Anyway". Developer ID and notarization need the Apple Developer Program.
+- Package locally: `./scripts/build-app.sh && ./scripts/make-dmg.sh`.
+
 ## Install and permissions
 
 ```bash
