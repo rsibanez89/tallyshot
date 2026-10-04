@@ -1,0 +1,25 @@
+name: Feature request
+description: Suggest something TallyShot should do.
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What are you trying to do?
+      description: Describe the task, not the solution. For example, "I reconcile card statements every month and…"
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would help?
+      description: How you imagine TallyShot could do it.
+  - type: dropdown
+    id: frequency
+    attributes:
+      label: How often would you use it?
+      options:
+        - Daily
+        - Weekly
+        - Monthly
+        - Rarely

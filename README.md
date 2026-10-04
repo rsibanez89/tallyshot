@@ -62,6 +62,15 @@ log stream --predicate 'subsystem == "local.tallyshot"'
 ./scripts/make-icon.sh            # regenerates Resources/AppIcon from scripts/render-icon.swift
 ```
 
+## Website
+
+- `docs/index.html`: the landing page, one self-contained file. No external fonts, scripts or trackers.
+- Served by GitHub Pages from `docs/` on `main`: https://rsibanez89.github.io/tallyshot/
+- The download button points at `releases/latest/download/TallyShot.dmg`. It works once a release has that asset.
+- Downloads are counted by GitHub: `gh api repos/rsibanez89/tallyshot/releases --jq '.[].assets[] | "\(.name) \(.download_count)"'`
+- Feature requests and bugs go to GitHub issue forms in `.github/ISSUE_TEMPLATE/`.
+- Preview locally: `open docs/index.html`.
+
 ## Install and permissions
 
 ```bash

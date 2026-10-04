@@ -1,0 +1,24 @@
+name: Bug report
+description: Something did not work as expected.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: Please do not attach screenshots of real bank statements or other private data.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What you selected, what you expected, what TallyShot showed instead.
+    validations:
+      required: true
+  - type: input
+    id: macos
+    attributes:
+      label: macOS version
+      placeholder: e.g. 26.1
+  - type: input
+    id: version
+    attributes:
+      label: TallyShot version
+      placeholder: Shown in Finder, Get Info on TallyShot.app
