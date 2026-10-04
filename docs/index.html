@@ -211,7 +211,7 @@
           <div class="selection" id="selection" aria-hidden="true"></div>
           <table class="statement" id="statement">
             <thead>
-              <tr><th>Date</th><th>Description</th><th class="num">Money out</th><th class="num">Balance</th></tr>
+              <tr><th>Date</th><th>Description</th><th class="num">Money in</th><th class="num">Money out</th></tr>
             </thead>
             <tbody></tbody>
             <tfoot>
@@ -298,14 +298,15 @@
 </footer>
 
 <script>
-  // Made-up statement data. Amounts are in cents to keep sums exact.
+  // Made-up statement data: [date, description, money in, money out]. Cents keep sums exact; null is an empty cell.
   const rows = [
-    ["02 Sep 2026", "Woolworths Metro", -6420, 293580],
-    ["05 Sep 2026", "Opal Travel", -2500, 291080],
-    ["09 Sep 2026", "Netflix", -1899, 289181],
-    ["12 Sep 2026", "Officeworks", -14250, 274931],
-    ["18 Sep 2026", "Telstra", -8900, 266031],
-    ["26 Sep 2026", "Coles", -7345, 258686],
+    ["02 Sep 2026", "Woolworths Metro", null, -6420],
+    ["04 Sep 2026", "Salary ACME Pty Ltd", 325000, null],
+    ["05 Sep 2026", "Opal Travel", null, -2500],
+    ["09 Sep 2026", "Netflix", null, -1899],
+    ["12 Sep 2026", "Refund Officeworks", 4250, null],
+    ["18 Sep 2026", "Telstra", null, -8900],
+    ["26 Sep 2026", "Transfer from savings", 50000, null],
   ];
   const excluded = new Set();
 
@@ -320,6 +321,8 @@
     [row[2], row[3]].forEach((cents, column) => {
       const td = document.createElement("td");
       td.className = "num";
+      tr.appendChild(td);
+      if (cents === null) return;
       const key = `${column}:${r}`;
       const amount = document.createElement("span");
       amount.className = "amount";
@@ -338,7 +341,6 @@
       });
       amount.appendChild(toggle);
       td.appendChild(amount);
-      tr.appendChild(td);
     });
     body.appendChild(tr);
   });
@@ -366,7 +368,10 @@
   }
 
   function columnTotal(column) {
-    return rows.reduce((sum, row, r) => excluded.has(`${column}:${r}`) ? sum : sum + row[2 + column], 0);
+    return rows.reduce((sum, row, r) => {
+      const cents = row[2 + column];
+      return cents === null || excluded.has(`${column}:${r}`) ? sum : sum + cents;
+    }, 0);
   }
 
   function renderTotals() {
