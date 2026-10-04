@@ -68,6 +68,9 @@ log stream --predicate 'subsystem == "local.tallyshot"'
 - Served by GitHub Pages from `docs/` on `main`: https://rsibanez89.github.io/tallyshot/
 - The download button points at `releases/latest/download/TallyShot.dmg`. It works once a release has that asset.
 - Downloads are counted by GitHub: `gh api repos/rsibanez89/tallyshot/releases --jq '.[].assets[] | "\(.name) \(.download_count)"'`
+- `docs/install.sh`: Terminal install, `curl -fsSL https://rsibanez89.github.io/tallyshot/install.sh | bash`.
+  curl downloads are not quarantined, so users skip the "Apple could not verify" dialog.
+  Test without touching /Applications: `INSTALL_DIR=/tmp/ts TALLYSHOT_NO_OPEN=1 bash docs/install.sh`.
 - Feature requests and bugs go to GitHub issue forms in `.github/ISSUE_TEMPLATE/`.
 - Preview locally: `open docs/index.html`.
 

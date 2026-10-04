@@ -70,6 +70,23 @@
   .download:hover { background: var(--green-strong); transform: translateY(-1px); }
   .download svg { width: 20px; height: 20px; }
   .fineprint { font-size: 14px; color: var(--muted); margin-top: 12px; }
+  .terminal { margin: 26px auto 0; max-width: 760px; }
+  .terminal p { font-size: 15px; color: var(--muted); margin-bottom: 8px; }
+  .command {
+    display: flex; align-items: center; gap: 10px; text-align: left;
+    background: #111814; color: #d8f5e1; border: 1px solid #2e4a38; border-radius: 10px; padding: 10px 10px 10px 16px;
+    font: 14px/1.4 ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  .command code { flex: 1; overflow-x: auto; white-space: nowrap; }
+  .command button {
+    flex: 0 0 auto; border: 1px solid #2e4a38; background: #1b2a21; color: #d8f5e1; cursor: pointer;
+    font: 600 13px -apple-system, system-ui, sans-serif; padding: 6px 12px; border-radius: 7px;
+  }
+  .command button:hover { background: #24382c; }
+  .steps-title { margin: 0 0 6px; }
+  .note ol { margin: 8px 0 0; padding-left: 22px; }
+  .note li { margin-bottom: 6px; }
+  .note .alt { margin: 12px 0 0; color: var(--muted); }
 
   /* Demo */
   .demo-section { padding-top: 24px; }
@@ -173,7 +190,15 @@
     <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3v10M5.5 8.5 10 13l4.5-4.5M4 17h12"/></svg>
     Download for Mac
   </a>
-  <p class="fineprint">Free · macOS 14 Sonoma or later · Apple silicon</p>
+  <p class="fineprint">Free · macOS 14 Sonoma or later · Apple silicon · <a href="#first-launch">First launch steps</a></p>
+  <div class="terminal">
+    <p>Comfortable with Terminal? This installs TallyShot without the first-launch warning:</p>
+    <div class="command">
+      <code id="install-command">curl -fsSL https://rsibanez89.github.io/tallyshot/install.sh | bash</code>
+      <button type="button" id="copy-command">Copy</button>
+    </div>
+    <p class="fineprint"><a href="install.sh">Read the script</a> before running it. It only downloads the latest release and copies it to Applications.</p>
+  </div>
 </header>
 
 <section class="demo-section" aria-labelledby="demo-title">
@@ -238,14 +263,17 @@
       <li><span>Use the panel to copy the table or text. Press <kbd>Esc</kbd> when you're done.</span></li>
     </ol>
 
-    <div class="note">
-      <strong>First launch.</strong>
-      TallyShot is free and not yet notarized by Apple, so macOS asks you to confirm it once:
+    <div class="note" id="first-launch">
+      <h3 class="steps-title">First launch</h3>
+      TallyShot is free and not yet notarized by Apple, so macOS asks you to confirm it once.
       <ol>
         <li>Open the downloaded <code>TallyShot.dmg</code> and drag TallyShot into Applications.</li>
-        <li>Open TallyShot. If macOS blocks it, go to System Settings → Privacy &amp; Security and click <em>Open Anyway</em>.</li>
-        <li>When asked, allow Screen Recording, then quit and reopen TallyShot. It only reads the area you select.</li>
+        <li>Open TallyShot from Applications. macOS shows <em>"TallyShot.app" Not Opened</em>. Click <strong>Done</strong>, not Move to Bin.</li>
+        <li>Open System Settings → Privacy &amp; Security. Scroll down to Security, find the TallyShot message, and click <strong>Open Anyway</strong>. Enter your password.</li>
+        <li>Open TallyShot again and click <strong>Open</strong>.</li>
+        <li>When asked, allow <strong>Screen Recording</strong>, then quit TallyShot from the menu bar icon and reopen it. It only reads the area you select.</li>
       </ol>
+      <p class="alt">Installed with the Terminal command? Skip steps 1 to 4.</p>
     </div>
   </div>
 </section>
@@ -364,6 +392,16 @@
     // tfoot's offsetTop is relative to the table.
     selection.style.height = foot.offsetTop + pad + 4 + "px";
   }
+
+  const copyCommand = document.getElementById("copy-command");
+  copyCommand.addEventListener("click", () => {
+    const command = document.getElementById("install-command").textContent;
+    copyCommand.textContent = "Copied";
+    const write = navigator.clipboard ? navigator.clipboard.writeText(command) : Promise.reject();
+    write.catch(() => { copyCommand.textContent = "Select and copy"; });
+    clearTimeout(copyCommand.timer);
+    copyCommand.timer = setTimeout(() => { copyCommand.textContent = "Copy"; }, 1500);
+  });
 
   renderTotals();
   placeSelection();
